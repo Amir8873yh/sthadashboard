@@ -5,6 +5,7 @@ pipeline {
         // You can set environment variables here if needed
         DEPLOY_SERVER = 'https://5fe08b9815d8.ngrok-free.app'
         DEPLOY_DIR = '/var/www/sthadashboard'
+        NODE_VERSION = 'v20.19.0'
     }
 
     stages {
