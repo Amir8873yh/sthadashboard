@@ -14,12 +14,16 @@ pipeline {
             }
         }
 
-        stage('Install Node') {
+        stage('Install Node Using NVM') {
             steps {
                 script {
+                    // Install NVM and Node.js without sudo
                     sh """
-                    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
+                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+                    export NVM_DIR="\$HOME/.nvm"
+                    [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"  # This loads nvm
+                    nvm install ${NODE_VERSION}
+                    nvm use ${NODE_VERSION}
                     """
                 }
             }
