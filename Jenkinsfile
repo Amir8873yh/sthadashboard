@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // You can set environment variables here if needed
-        DEPLOY_SERVER = 'your-server-ip-or-url'
+        DEPLOY_SERVER = 'https://5fe08b9815d8.ngrok-free.app'
         DEPLOY_DIR = '/var/www/sthadashboard'
     }
 
