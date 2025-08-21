@@ -4,28 +4,13 @@ pipeline {
     environment {
         DEPLOY_SERVER = 'https://5fe08b9815d8.ngrok-free.app'
         DEPLOY_DIR = '/var/www/sthadashboard'
-        NODE_VERSION = 'v20.19.0'  // Specify the correct Node version for compatibility
+        NODE_VERSION = 'v20.19.0'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Amir8873yh/sthadashboard.git', branch: 'dev'
-            }
-        }
-
-        stage('Install Node Using NVM') {
-            steps {
-                script {
-                    // Install NVM and Node.js without sudo
-                    sh """
-                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-                    export NVM_DIR="\$HOME/.nvm"
-                    [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"  # This loads nvm
-                    nvm install ${NODE_VERSION}
-                    nvm use ${NODE_VERSION}
-                    """
-                }
             }
         }
 
@@ -44,7 +29,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npm run build'  // Or use `yarn build` if you're using Yarn
+                sh 'npm run build'
             }
         }
 
