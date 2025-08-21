@@ -2,48 +2,53 @@ pipeline {
     agent any
 
     environment {
-        // You can set environment variables here if needed
         DEPLOY_SERVER = 'https://5fe08b9815d8.ngrok-free.app'
         DEPLOY_DIR = '/var/www/sthadashboard'
-        NODE_VERSION = 'v20.19.0'
+        NODE_VERSION = 'v20.19.0'  // Specify the correct Node version for compatibility
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the repository code from GitHub
                 git url: 'https://github.com/Amir8873yh/sthadashboard.git', branch: 'dev'
+            }
+        }
+
+        stage('Install Node') {
+            steps {
+                script {
+                    sh """
+                    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+                    sudo apt-get install -y nodejs
+                    """
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Assuming you're using npm or yarn
-                sh 'npm install'  // Or `yarn install` if you're using yarn
+                sh 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Example test command (adjust according to your project)
-                sh 'npm test'  // Or `yarn test` for Yarn
+                // If no tests are defined, comment this out or add a simple test script to package.json
+                sh 'npm test'  // Or add a dummy test script to your package.json
             }
         }
 
         stage('Build') {
             steps {
-                // Example build command (adjust according to your project)
-                sh 'npm run build'  // Or `yarn build`
+                sh 'npm run build'  // Or use `yarn build` if you're using Yarn
             }
         }
 
         stage('Deploy') {
             steps {
-                // Deploy to server (assuming you're using SSH or SCP for deployment)
-                // Replace with your actual deployment steps
                 sh """
                     scp -r ./build/* ${DEPLOY_SERVER}:${DEPLOY_DIR}
-                    ssh ${DEPLOY_SERVER} 'cd ${DEPLOY_DIR} && npm run start'  // Adjust as necessary
+                    ssh ${DEPLOY_SERVER} 'cd ${DEPLOY_DIR} && npm install --production && npm run start'
                 """
             }
         }
