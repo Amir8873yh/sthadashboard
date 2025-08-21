@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the repository code from GitHub
-                git url: 'https://github.com/Amir8873yh/sthadashboard.git', branch: 'main'
+                git url: 'https://github.com/Amir8873yh/sthadashboard.git', branch: 'dev'
             }
         }
 
