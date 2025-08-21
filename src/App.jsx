@@ -4,6 +4,7 @@ import AppNavigator from "./config/AppNavigator";
 function App() {
   return (
     <>
+    
       <Toaster
         toastOptions={{
           position: "top-center",
